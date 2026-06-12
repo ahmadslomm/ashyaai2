@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496933348095",
+    "project_id": "voice-chat-room-1dccf",
+    "storage_bucket": "voice-chat-room-1dccf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496933348095:android:cdb862efbbdd652d1262ca",
+        "android_client_info": {
+          "package_name": "com.example.voice_chat_room"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNz93StBOqYsplivv-z-lho7mEwp4cJrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

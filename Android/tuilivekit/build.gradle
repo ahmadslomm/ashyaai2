@@ -65,6 +65,9 @@ dependencies {
     implementation 'com.github.yyued:SVGAPlayer-Android:2.6.1'
 
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation platform('com.google.firebase:firebase-bom:32.2.0')
+    implementation 'com.google.firebase:firebase-firestore'
+
 
     def projects = this.rootProject.getAllprojects().stream().map { project -> project.name }.collect()
     api projects.contains("tuicore") ? project(':tuicore') : "com.tencent.liteav.tuikit:tuicore:latest.release"

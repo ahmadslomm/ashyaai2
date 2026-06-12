@@ -15,12 +15,15 @@ import com.tencent.cloud.tuikit.engine.room.TUIRoomDefine;
 import com.tencent.imsdk.v2.V2TIMFollowInfo;
 import com.tencent.imsdk.v2.V2TIMManager;
 import com.tencent.imsdk.v2.V2TIMValueCallback;
+import com.tencent.qcloud.tuicore.TUILogin;
 import com.tencent.qcloud.tuicore.util.ToastUtil;
 import com.trtc.tuikit.common.imageloader.ImageLoader;
 import com.trtc.tuikit.common.ui.PopupDialog;
 import com.trtc.uikit.livekit.R;
 import com.trtc.uikit.livekit.common.LiveKitLogger;
 import com.trtc.uikit.livekit.features.audiencecontainer.manager.AudienceManager;
+import com.trtc.uikit.livekit.features.wallet.model.WalletInfo;
+import com.trtc.uikit.livekit.features.wallet.service.WalletService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +40,17 @@ public class UserInfoDialog extends PopupDialog {
     private       TextView                   mTextUserId;
     private       ImageView                  mImageAvatar;
     private       TextView                   mTextFans;
+    private       TextView                   mTextWalletBalance;
     private       TUIRoomDefine.SeatFullInfo mUserInfo;
+
+    private final Observer<WalletInfo> mWalletObserver = walletInfo -> {
+        if (walletInfo == null) {
+            return;
+        }
+        if (mTextWalletBalance != null) {
+            mTextWalletBalance.setText(getContext().getString(R.string.wallet_balance_text, walletInfo.coinBalance));
+        }
+    };
 
     private final Observer<Set<String>> mFollowingUserObserver = this::onFollowingUserChanged;
 
@@ -87,8 +100,23 @@ public class UserInfoDialog extends PopupDialog {
         mButtonFollow = view.findViewById(R.id.btn_follow);
         mTextUserName = view.findViewById(R.id.tv_anchor_name);
         mTextUserId = view.findViewById(R.id.tv_user_id);
+        mTextWalletBalance = view.findViewById(R.id.tv_wallet_balance);
         mImageAvatar = view.findViewById(R.id.iv_avatar);
         mTextFans = view.findViewById(R.id.tv_fans);
+    }
+
+    private void observeWalletBalance() {
+        if (mTextWalletBalance == null || mUserInfo == null || TextUtils.isEmpty(mUserInfo.userId)) {
+            return;
+        }
+        WalletService.getInstance().getWalletInfo(mUserInfo.userId).observeForever(mWalletObserver);
+    }
+
+    private void unobserveWalletBalance() {
+        if (mUserInfo == null || TextUtils.isEmpty(mUserInfo.userId)) {
+            return;
+        }
+        WalletService.getInstance().getWalletInfo(mUserInfo.userId).removeObserver(mWalletObserver);
     }
 
     @Override
@@ -96,12 +124,14 @@ public class UserInfoDialog extends PopupDialog {
         super.onAttachedToWindow();
         addObserver();
         getFansNumber();
+        observeWalletBalance();
     }
 
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         removeObserver();
+        unobserveWalletBalance();
     }
 
     @SuppressLint("SetTextI18n")

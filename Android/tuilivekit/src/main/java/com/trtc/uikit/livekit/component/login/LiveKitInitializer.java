@@ -17,6 +17,7 @@ import com.tencent.qcloud.tuicore.TUICore;
 import com.tencent.qcloud.tuicore.TUILogin;
 import com.tencent.qcloud.tuicore.interfaces.ITUINotification;
 import com.trtc.tuikit.common.system.ContextProvider;
+import com.google.firebase.FirebaseApp;
 import com.trtc.uikit.livekit.common.LiveKitLogger;
 
 public final class LiveKitInitializer extends ContentProvider {
@@ -53,6 +54,7 @@ public final class LiveKitInitializer extends ContentProvider {
     }
 
     private void loginRoomEngine() {
+        FirebaseApp.initializeApp(getContext());
         if (TUILogin.isUserLogined()) {
             TUIRoomEngine.login(TUILogin.getAppContext(), TUILogin.getSdkAppId(), TUILogin.getUserId(),
                     TUILogin.getUserSig(), new TUIRoomDefine.ActionCallback() {

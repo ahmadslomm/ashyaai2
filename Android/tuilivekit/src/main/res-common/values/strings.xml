@@ -191,6 +191,12 @@
     <string name="common_follow_anchor">Follow</string>
     <string name="common_gift_give_gift">Send Out</string>
     <string name="common_gift_title">Gift</string>
+    <string name="wallet_balance_label">Balance</string>
+    <string name="wallet_balance_text">Balance: %d</string>
+    <string name="wallet_add_coins_prompt">Add coins</string>
+    <string name="wallet_insufficient_coins">Insufficient coins</string>
+    <string name="wallet_refresh_error">Failed to refresh wallet balance</string>
+    <string name="wallet_transaction_history_title">Transaction History</string>
     <string name="common_hang_up">Hang Up</string>
     <string name="common_kick_user_confirm_message">Are you sure you want to remove %s?</string>
     <string name="common_link_mic_manager">Link Management</string>
