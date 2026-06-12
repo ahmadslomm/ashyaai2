@@ -27,7 +27,7 @@ class RoomEngineObserver extends TUIRoomObserver {
       context.userManager.target?.onRemoteUserLeaveRoom(roomId, userInfo);
     };
     super.onKickedOffLine = (message) {
-      // TODO: krab need to confirm whether needs to implement here with natives
+      context.kickedOutSubject.target?.add(null);
     };
     super.onKickedOutOfRoom = (roomId, reason, message) {
       context.roomManager.target?.onKickedOutOfRoom(roomId, reason, message);
